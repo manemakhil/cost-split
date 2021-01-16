@@ -38,6 +38,7 @@ import React, { Component, Fragment } from 'react';
 import './App.css';
 
 import View from './Components/View';
+import Navigation from './Components/Navagation';
 
 class App extends Component {
 
@@ -52,6 +53,7 @@ class App extends Component {
 
     this.addGroup = this.addGroup.bind(this);
     this.addExpense = this.addExpense.bind(this);
+    this.initialize = this.initialize.bind(this);
   }
 
   //Method to add new groups and people involved. Validations to be done before call
@@ -59,9 +61,11 @@ class App extends Component {
     let tempState = { ...this.state };
 
     //Adding the new group and people in it to a temp state variable
-    tempState.groups[groupName] = { ...people };
+    tempState.groups[groupName] = people;
     people.forEach((person) => {
-      tempState.people[person][groupName] = 0;
+      console.log(person);
+      console.log(tempState.expenditure);
+      tempState.expenditure[person][groupName] = 0;
     });
 
     //Setting the state
@@ -71,24 +75,39 @@ class App extends Component {
   }
 
   //Method to record, split and assign the expense
-  addExpense(group, person, expense) {
+  addExpense(group, sourcePerson, expense) {
     let tempState = { ...this.state };
-    
-    console.log(tempState.groups[group]);
+
     //Splitting the expense amongst the group
     let split = expense / tempState.groups[group].length
+
     tempState.groups[group].forEach((fellow) => {
-      if(fellow !== person) tempState.people[fellow][person] -= split;
+      if (fellow !== sourcePerson) {
+        //Checking if the Source already owes this Fellow
+        let sourcePersonRecord = tempState.people[sourcePerson][fellow];
+        if (sourcePersonRecord < 0) {
+          //Splitting and equalizing the expenses depending who's is greater
+          let diff = Math.abs(Math.abs(sourcePersonRecord) - Math.abs(split));
+          
+          tempState.people[sourcePerson][fellow] = 0;
+          tempState.people[fellow][sourcePerson] = 0;
+          //Adjusting for negative vaules
+          sourcePersonRecord < split ?  tempState.people[sourcePerson][fellow] = -diff : tempState.people[fellow][sourcePerson] = -diff;
+        } else {
+          tempState.people[fellow][sourcePerson] -= split;
+        }
+      }
     });
 
     //Recording individual expense
-    tempState.expenditure[person][group] += expense;
-    console.log(tempState);
+    tempState.expenditure[sourcePerson][group] += expense;
+
+
     //Setting the state
     this.setState({
       ...tempState
     });
-  } 
+  }
 
   //Initial set up
   initialize(...people) {
@@ -96,7 +115,7 @@ class App extends Component {
 
     tempState.groups = {};
     tempState.groups["Everyone"] = people;
-    
+
     tempState.expenditure = {};
     people.forEach((person) => {
       tempState.expenditure[person] = {};
@@ -107,7 +126,7 @@ class App extends Component {
     people.forEach((main_person) => {
       tempState.people[main_person] = {};
       people.forEach((sub_person) => {
-        if(main_person !== sub_person) 
+        if (main_person !== sub_person)
           tempState.people[main_person][sub_person] = 0;
       })
     })
@@ -120,10 +139,22 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <View data = {this.state.people}/>
 
-        <button onClick={() => this.initialize("manem", "akhil", "suresh", "sreedevi", "nirmala")}>Initialize</button>
-        <button onClick={() => this.addExpense("Everyone", "akhil", 500)}>Initialize</button>
+        <div className="viewBlur">
+          <Navigation
+            groups={this.state.groups}
+            people={this.state.expenditure !== undefined ? Object.keys(this.state.expenditure) : []}
+            addGroup={this.addGroup}
+            addExpense={this.addExpense}
+          />
+          <View 
+            data={this.state.people} 
+            initialize = {this.initialize}
+          />
+        </div>
+        <div id="root2">
+
+        </div>
       </Fragment>
     );
   }

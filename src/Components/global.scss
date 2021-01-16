@@ -1,0 +1,68 @@
+.shadowOverlay {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(238, 222, 249, 0.3);
+    display: flex;
+    .content {
+        margin: auto;
+        background-color: white;
+        width: auto;
+        form {
+            background-color: white;
+            padding: 40px;
+            label {
+                display: block;
+                margin-bottom: 18px;
+                padding: 10px;
+                &:label.distinct {
+                    &:hover, &:focus {
+                        border-radius: 5px;
+                        background-color: #eedef9;
+                        box-shadow: 3px 3px #8a0095;
+                    }
+                }
+                input, select {
+                    margin-left: 5px;
+                }
+                input[type="text"] {
+                    background-color: white;
+                    padding: 10px;
+                    border: 0.5px #24003d solid;
+                    border-radius: 5px;
+                    &:hover, &:active {
+                        border: 1px #24003d solid;
+                    }
+                }
+                input[type="checkbox"], input[type="radio"] {
+                    margin-right: 5px;
+                    height: 20px;
+                    width: 20px;
+                    vertical-align: bottom;
+                    & + span {
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                }
+            }
+
+            button {
+                border: none;
+                padding: 10px 20px;
+                margin-right: 5px;
+                width: 48%;
+            }
+
+            div.addSub {
+                display: flex;
+                justify-content: space-evenly;
+                margin-bottom: 20px;
+                button.addSub {
+                    width: auto;
+                    
+                }
+            }
+        }
+    }
+}

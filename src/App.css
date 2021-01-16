@@ -1,0 +1,5 @@
+@media only screen {
+    body * {
+        transition: 500ms ease;
+    }
+}

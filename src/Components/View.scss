@@ -1,8 +1,84 @@
-.row{
-    .carousel-inner {
-        margin-left: 45%;
+$blueShade: #00134f;
+$redShade: #be0000;
+
+//Smallest Mobile
+@media only screen {
+
+    .view{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 40px 10%;
+        .expense {
+            display: none;
+            table {
+                border-collapse: collapse;
+                border: 0.5px $blueShade solid;
+                thead {
+                    th {
+                        background-color: $blueShade;
+                        color: white;
+                        padding: 10px 20px;
+                    }
+                }
+                tbody {
+                    tr {
+                        td:first-child {
+                            text-align: left;
+                            padding: 10px;
+                        }
+                    }
+                }
+            }
+            &.active {
+                display: block;
+            }
+            & * {
+                margin: 0px auto;
+                text-align: center;
+            }
+            .title {
+                border-bottom: 0.5px grey solid;
+            }
+        }
+        
+        button.viewController {
+            border: none;
+            padding: 5px 10px;
+            font-size: 40px;
+            background-color: white;
+            transition: 100ms ease;
+            cursor: pointer;
+        }
+
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: black;
+        }
     }
-    .carousel-control-prev-icon, .carousel-control-next-icon {
-        background-color: black;
+
+    .initial {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        div {
+            margin: 0px 0px 20px 0px;
+            padding: 20px;
+            box-shadow: 5px 5px #00134f;
+            background-color: #be0000;
+            color: white;
+        }
+        button {
+            border: none;
+            padding: 10px 20px;
+            width: 70%;
+            margin-bottom: 20px;
+            background-color: #00134f;
+            font-size: 22px;
+            color: #eedef9;
+            box-shadow: 5px 5px #be0000;
+            &:hover {
+                box-shadow: 7px 7px #be0000;
+            }
+        }
     }
 }

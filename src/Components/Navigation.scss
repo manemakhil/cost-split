@@ -1,0 +1,41 @@
+$lightShade: #eedef9;
+
+//Smallest screen and up
+@media only screen{
+    nav {
+        background-color: #00134f;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-bottom: 1px lightgrey solid;
+        color: #eedef9;
+        div.brand {
+            padding: 10px 20px;
+            font-size: 32px;
+        }
+        button {
+            border: none;
+            padding: 10px 20px;
+            width: 70%;
+            margin-bottom: 20px;
+            background-color: #eedef9;
+            font-size: 22px;
+            color: #24003d;
+            &:hover {
+                box-shadow: 5px 5px #be0000;
+                font-size: 23px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    nav {
+        display: flex;
+        flex-direction: row;
+        button {
+            margin: 20px 40px;
+            width: 25%;
+        }
+    }
+}
